@@ -32,6 +32,13 @@ function _depends() {
 	# (un)rar
   if [[ $distribution == "Debian" ]]; then
 	_rar
+  elif [[ $distribution == "Raspbian" ]]; then
+        cd /tmp
+        sudo apt-get build-dep unrar-nonfree
+        sudo apt-get source -b unrar-nonfree
+        sudo dpkg -i unrar_*.deb
+	rm -rf unrar_*
+	cd -
   else
     apt-get -y install rar unrar >>$log 2>&1 || { echo "INFO: Could not find rar/unrar in the repositories. It is likely you do not have the multiverse repo enabled. Installing directly."; _rar; }
   fi
